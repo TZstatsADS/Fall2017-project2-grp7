@@ -4,6 +4,7 @@ library(shiny)
 library(shinydashboard)
 library(data.table)
 library(ggmap)
+library(leaflet)
 
 dashboardPage(
   
@@ -13,18 +14,34 @@ dashboardPage(
   ## dashboard sidebar
   dashboardSidebar(
     sidebarMenu(
-      #menuItem("Dashboard", tabName = "dashboard", icon = icon("dashboard")),
+      # create Introduction Tab
       menuItem("Introduction", tabName = "intro"),
+      
+      # create Statistics Tab
       menuItem("Statistics",  tabName = "stats"),
-      menuItem("Map", tabName = "map"),
-      menuItem("Data", tabName = "data")
+      
+      # create Maps Tab with subitems
+      menuItem("Map", tabName = "map",
+               menuSubItem('Air Quality',
+                           tabName = 'tAirMap' ),
+               menuSubItem('Community Gardens',
+                           tabName = 'tGardenMap' ) ),
+      
+      # create Data Tab with subitems
+      menuItem("Data", tabName = "data",
+               menuSubItem('Air Quality',
+                           tabName = 'tAirData' ),
+               menuSubItem('Community Gardens',
+                           tabName = 'tGardenData' ) )
+      
     )),
   
   ## dashboard body
   dashboardBody(
 
     tabItems(
-      # Introduction tab content - 
+      
+      # Introduction tab content
       tabItem(tabName = "intro",
               
               h2("Introduction"),
@@ -47,21 +64,30 @@ dashboardPage(
       ),
       
       # Map tab content
-      tabItem(tabName = "map",
+      tabItem(tabName = "tGardenMap",
               
-              plotOutput("plotMap")
+              leafletOutput("leafletPlot")
               
       ),
       
-      # Data tab content
-      tabItem(tabName = "data",
-              
-              fluidRow(
-                column(12,
-                       dataTableOutput('table')
-                )
-              )
-              
+      ## air quality data tab content
+      tabItem( tabName = "tAirData",
+               
+               fluidRow(
+                 column(12,
+                        dataTableOutput('tableAir')
+                 )
+               )
+      ),
+      
+      ## community garden data tab content
+      tabItem( tabName = "tGardenData",
+               
+               fluidRow(
+                 column(12,
+                        dataTableOutput('tableGarden')
+                 )
+               )
       )
       
     )
