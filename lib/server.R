@@ -11,7 +11,10 @@ shinyServer(
   {
     
     ## read community gardens data
-    gardens    <- as.data.table( read.csv( "../data/NYC_Greenthumb_Community_Gardens.csv" ) )
+    gardens <- as.data.table( read.csv( "../data/NYC_Greenthumb_Community_Gardens.csv" ) )
+    
+    ## read air quality data
+    air     <- as.data.table( read.csv( "../data/Air_Quality.csv" ) )
     
     ## create dummy air quality data table
     airQuality <- as.data.table( matrix( rnorm(120), nrow = 40, ncol = 3 ) )
@@ -61,7 +64,7 @@ shinyServer(
     output$tableGarden <- renderDataTable( gardens )
     
     ## render air quality datatable
-    output$tableAir    <- renderDataTable( airQuality )  
+    output$tableAir    <- renderDataTable( air[ Measure == "Average Concentration" ] )  
     
   }
   
