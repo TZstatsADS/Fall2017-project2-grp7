@@ -5,19 +5,26 @@ library(shinydashboard)
 library(data.table)
 library(ggmap)
 
+# source auxiliary functions
+source( "./helpers.R" )
+
 shinyServer(
   
   function(input, output) 
   {
     
+    ################################################################
+    ## Reading input data
+    ################################################################
+    
     ## read community gardens data
     gardens <- as.data.table( read.csv( "../data/NYC_Greenthumb_Community_Gardens.csv" ) )
     
     ## read air quality data
-    air     <- as.data.table( read.csv( "../data/Air_Quality.csv" ) )
+    air      <- as.data.table( read.csv( "../data/Air_Quality.csv" ) )
+    air$name <- as.character( air$name )
+    air      <- air[ Measure == "Average Concentration" & year_description == "Annual Average 2009-2010" ]
     
-    ## create dummy air quality data table
-    airQuality <- as.data.table( matrix( rnorm(120), nrow = 40, ncol = 3 ) )
     
     ## create icon to display in map
     treeIcons <- icons(
@@ -33,14 +40,15 @@ shinyServer(
     ## render EDA plots
     output$plot1 <- renderPlot({
       
-      ## filter
-      set.seed(123)
-      x <- rnorm( input$n )
-      hist( x )
+      exampleHist( input$n )
       
     })
     
-    ## render map - static map - delete later
+    ################################################################
+    ## Maps
+    ################################################################
+    
+    ## render map - static map - not used - delete later
     output$plotMap <- renderPlot({
       
       ggmap(myMap) +
