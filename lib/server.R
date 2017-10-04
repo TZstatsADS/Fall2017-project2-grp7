@@ -17,11 +17,16 @@ shinyServer(
     ## Reading input data
     ################################################################
     
+    inputData <- readData()
+    
     ## read community gardens data
-    gardens <- as.data.table( read.csv( "../data/NYC_Greenthumb_Community_Gardens.csv" ) )
+    #gardens <- as.data.table( read.csv( "../data/NYC_Greenthumb_Community_Gardens.csv" ) )
+    gardens <- inputData$gardens
     
     ## read air quality data
-    air      <- as.data.table( read.csv( "../data/Air_Quality.csv" ) )
+    #air      <- as.data.table( read.csv( "../data/Air_Quality.csv" ) )
+    
+    air      <- inputData$air
     air$name <- as.character( air$name )
     air      <- air[ Measure == "Average Concentration" & year_description == "Annual Average 2009-2010" ]
     
