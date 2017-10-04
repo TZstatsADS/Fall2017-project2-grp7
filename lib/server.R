@@ -61,10 +61,7 @@ shinyServer(
     ## render leaflet map
     output$leafletPlot <- renderLeaflet({
       
-      leaflet( data = gardens ) %>% 
-        addTiles() %>% 
-        addMarkers( ~Longitude, ~Latitude, popup = ~as.character(Garden.Name), icon = treeIcons,
-                    clusterOptions = markerClusterOptions() )
+      gardenLeaflet( gardens, treeIcons )
         
     })
     
