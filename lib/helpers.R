@@ -10,6 +10,47 @@ exampleHist <- function( n ){
   hist( x )
   
 }
+#########EDA--Histogram and Density Plots to visualize each pollutant:
+hist_and_density<-function(data,type){
+  if(type=="ALL"){
+    x <- data$data_valuemessage
+    fit <- density(x)
+    
+    #Histogram and Density plot of overall pollutants
+    plt<-plot_ly(x = x) %>% 
+      add_histogram(name="Histogram") %>% 
+      add_lines(x = fit$x, y = fit$y, fill = "tozeroy", yaxis = "y2",name="Density") %>% 
+      layout(title = 'Level of All Pollutants Histogram',yaxis2 = list(overlaying = "y", side = "right"))
+    }
+  else {
+    x <- data[data$pollutant==type,]$data_valuemessage
+    fit <- density(x)
+    #Histogram and Density plot of each pollutant
+    plt<-plot_ly(x = x) %>% 
+      add_histogram(name="Histogram") %>% 
+      add_lines(x = fit$x, y = fit$y, fill = "tozeroy", yaxis = "y2",name="Density") %>% 
+      layout(title = paste("Level of", type, "Histogram",sep=" "),yaxis2 = list(overlaying = "y", side = "right"))
+      }
+  return(plt)
+}
+#########EDA--Pie Chart to visualize different pollutants in each neighborhood:
+pie<-function(data,neighborhood){
+  if(neighborhood=="ALL"){
+    p <- plot_ly(data,labels=~pollutant,values = ~data_valuemessage, type = 'pie') %>%
+      layout(title = paste("Pollutant in NYC"),
+             xaxis = list(showgrid = FALSE, zeroline = FALSE, showticklabels = FALSE),
+             yaxis = list(showgrid = FALSE, zeroline = FALSE, showticklabels = FALSE),
+             showlegend = FALSE) 
+  }
+  else{
+    p <- plot_ly(data[data$geo_entity_name==neighborhood,],labels=~pollutant,values = ~data_valuemessage, type = 'pie') %>%
+      layout(title = paste("Pollutant in",neighborhood,sep=" "),
+             xaxis = list(showgrid = FALSE, zeroline = FALSE, showticklabels = FALSE),
+             yaxis = list(showgrid = FALSE, zeroline = FALSE, showticklabels = FALSE),
+             showlegend = FALSE) 
+  }
+  return(p)
+}
 
 ##
 ## readData function
