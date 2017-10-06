@@ -31,7 +31,7 @@ shinyServer(
     air$data_valuemessage<-as.numeric(air$data_valuemessage)
     air$geo_entity_name<-as.character(air$geo_entity_name)
     air      <- air[air$Measure == "Average Concentration" & air$year_description == "Annual Average 2009-2010",]
-    air$pollutant <- substr(air$name,41,nchar(air$name))
+    air$pollutant <- substr(air$name,42,nchar(air$name))
     
     ## create icon to display in map
     treeIcons <- icons(
