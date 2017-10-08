@@ -10,6 +10,45 @@ exampleHist <- function( n ){
   hist( x )
   
 }
+
+##
+## readData function
+##
+readData <- function(){
+    
+  # return list with 3 datatables
+  list( gardens = as.data.table( read.csv( "../data/NYC_Greenthumb_Community_Gardens.csv" ) ),
+        air     = as.data.table( read.csv( "../data/Air_Quality.csv" ) ),
+        bike    = as.data.table( read.csv( "../data/citibikeStations-012017.csv") ) )
+  
+}
+
+##
+## community garden leaflet plot
+##
+gardenLeaflet <- function( gardens, treeIcons ){
+  
+  leaflet( data = gardens ) %>% 
+    addTiles() %>% 
+    addMarkers( ~Longitude, ~Latitude, popup = ~as.character(Garden.Name), icon = treeIcons,
+                clusterOptions = markerClusterOptions() )
+  
+}
+
+
+##
+## citibike stations leaflet plot
+##
+bikeStationLeaflet <- function( bike, bikeIcons ){
+  
+  leaflet( data = bike ) %>% 
+    addTiles() %>% 
+    addMarkers( ~long, ~lat, popup = ~as.character(Name), icon = bikeIcons,
+                clusterOptions = markerClusterOptions() )
+  
+}
+
+
 #########EDA--Histogram and Density Plots to visualize each pollutant:
 hist_and_density<-function(data,type){
   if(type=="ALL"){
@@ -21,7 +60,7 @@ hist_and_density<-function(data,type){
       add_histogram(name="Histogram") %>% 
       add_lines(x = fit$x, y = fit$y, fill = "tozeroy", yaxis = "y2",name="Density") %>% 
       layout(title = 'Level of All Pollutants Histogram',yaxis2 = list(overlaying = "y", side = "right"))
-    }
+  }
   else {
     x <- data[data$pollutant==type,]$data_valuemessage
     fit <- density(x)
@@ -30,10 +69,12 @@ hist_and_density<-function(data,type){
       add_histogram(name="Histogram") %>% 
       add_lines(x = fit$x, y = fit$y, fill = "tozeroy", yaxis = "y2",name="Density") %>% 
       layout(title = paste("Level of", type, "Histogram",sep=" "),yaxis2 = list(overlaying = "y", side = "right"))
-      }
+  }
   return(plt)
 }
-#########EDA--Pie Chart to visualize different pollutants in each neighborhood:
+
+
+#########EDA--Pie Chart to visualize different pollutants' proportion in each neighborhood:
 pie<-function(data,neighborhood){
   if(neighborhood=="ALL"){
     p <- plot_ly(data,labels=~pollutant,values = ~data_valuemessage, type = 'pie') %>%
@@ -52,26 +93,27 @@ pie<-function(data,neighborhood){
   return(p)
 }
 
-##
-## readData function
-##
-readData <- function(){
-  
-  list( gardens = as.data.table( read.csv( "../data/NYC_Greenthumb_Community_Gardens.csv" ) ),
-        air     = as.data.table( read.csv( "../data/Air_Quality.csv" ) ) )
-  
+#########EDA--Radar Plot to visualize different pollutants in each neighborhood:
+
+radar<-function(data,neighborhood){
+  if(neighborhood=="ALL"){
+    p <- "Change the region for radar plots."
+  }
+  else{
+    # name<-"New York City"
+    newdata <- data[rownames(data)==neighborhood,]
+    max<-apply(data,2,max)
+    dt <- data.frame(rbind(max,rep(0,5),newdata))
+    colnames(dt) <- c("EC","PM2.5","NO","NO2","03")
+    p <- radarchart(dt,axistype = 2,
+               pcol=rgb(0.2,0.5,0.5,0.9) , pfcol=rgb(0.2,0.5,0.5,0.5) , plwd=4 , 
+               #custom the grid
+               cglcol="grey", cglty=1, axislabcol="grey", caxislabels=seq(0,100,20), cglwd=0.8,
+               #custom labels
+               vlcex=0.8) 
+  }
+  return(p)
 }
 
-##
-## community garden leaflet plot
-##
-gardenLeaflet <- function( gardens, treeIcons ){
-  
-  leaflet( data = gardens ) %>% 
-    addTiles() %>% 
-    addMarkers( ~Longitude, ~Latitude, popup = ~as.character(Garden.Name), icon = treeIcons,
-                clusterOptions = markerClusterOptions() )
-  
-}
 
 
