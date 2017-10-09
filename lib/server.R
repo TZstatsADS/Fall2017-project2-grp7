@@ -43,7 +43,7 @@ shinyServer(
     colnames(newair) <- levels(as.factor(air$pollutant))
     rownames(newair) <- air$geo_entity_name[1:48]
     
-    ## get citibike stations data
+    ## get citibike stations data - JUST A COMMENT
     bikeStations <- inputData$bike
     
     ## create icon to display in map
