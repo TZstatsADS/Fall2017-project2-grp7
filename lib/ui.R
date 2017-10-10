@@ -106,11 +106,47 @@ dashboardPage(
       # Air quality map tab content
       tabItem(tabName = "tAirMap",
               
-              h2("Air Quality Heat Map of New York City"),
+              h2("  Quantile Map of Air Quality in New York City"),
               
-              uiOutput("uiPollMap"),
-              leafletOutput("mapAirPlot")
+              tabsetPanel(
+                
+                tabPanel("PM2.5", 
+                         fluidRow(
+                                  box(checkboxGroupInput("pollutant_level", "Select pollutant Level", c("Low (Green)" =1, "Below Medium (yellow)" =2, "Above Medium (orange)" = 3, "High (red)" = 4),
+                                                         selected = c(1,2,3,4)),width = 4),
+                                  #box(analysis, height = 160),
+                                  column(width=10, box(width = NULL, solidHeader = TRUE, leafletOutput("mapAirPlot1", height = 500))
+                                  ))), 
+                tabPanel("NO2", 
+                         fluidRow(
+                                  box(checkboxGroupInput("pollutant_level", "Select pollutant Level", c("Low (Green)" =1, "Below Medium (yellow)" =2, "Above Medium (orange)" = 3, "High (red)" = 4),
+                                                         selected = c(1,2,3,4)),width = 4),
+                                  #box(analysis, height = 160),
+                                  column(width=10, box(width = NULL, solidHeader = TRUE, leafletOutput("mapAirPlot2", height = 500))
+                                  ))),
+                tabPanel("EC", 
+                         fluidRow(
+                                  box(checkboxGroupInput("pollutant_level", "Select pollutant Level", c("Low (Green)" =1, "Below Medium (yellow)" =2, "Above Medium (orange)" = 3, "High (red)" = 4),
+                                                         selected = c(1,2,3,4)),width = 4),
+                                  #box(analysis, height = 160),
+                                  column(width=10, box(width = NULL, solidHeader = TRUE, leafletOutput("mapAirPlot3", height = 500))
+                                  ))), 
+                tabPanel("NO", 
+                         fluidRow(
+                                  box(checkboxGroupInput("pollutant_level", "Select pollutant Level", c("Low (Green)" =1, "Below Medium (yellow)" =2, "Above Medium (orange)" = 3, "High (red)" = 4),
+                                                         selected = c(1,2,3,4)),width = 4),
+                                  #box(analysis, height = 160),
+                                  column(width=10, box(width = NULL, solidHeader = TRUE, leafletOutput("mapAirPlot4", height = 500))
+                                  ))), 
+                tabPanel("O3", 
+                         fluidRow(
+                                  box(checkboxGroupInput("pollutant_level", "Select pollutant Level", c("Low (Green)" =1, "Below Medium (yellow)" =2, "Above Medium (orange)" = 3, "High (red)" = 4),
+                                                         selected = c(1,2,3,4)),width = 4),
+                                  #box(analysis, height = 160),
+                                  column(width=10, box(width = NULL, solidHeader = TRUE, leafletOutput("mapAirPlot5", height = 500))
+                                  )))
                
+                )
        ),
       
       # Citibike Stations map tab content

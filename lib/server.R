@@ -27,21 +27,22 @@ shinyServer(
     
     ## get air quality data
     air      <- inputData$air
+    # air      <- as.data.table( read.csv( "Air_Quality_new.csv" ) )
+    air      <- air[air$Measure == "Average Concentration" & air$year_description == "Annual Average 2009-2010",]
     air$name <- as.character( air$name )
     air$data_valuemessage<-as.numeric(as.character(air$data_valuemessage))
     air$geo_entity_name<-as.character(air$geo_entity_name)
-    air      <- air[air$Measure == "Average Concentration" & air$year_description == "Annual Average 2009-2010",]
     air$pollutant <- substr(air$name,42,nchar(air$name))
     
     ## new air quality data for radar plot
     newair<-data.frame(matrix(rep(1,240),48,5))
-    newair[,1] <- as.numeric(as.character(air$data_valuemessage))[air$pollutant=="Elemental Carbon (EC)"]
-    newair[,2] <- as.numeric(as.character(air$data_valuemessage))[air$pollutant=="Fine Particulate Matter (PM2.5)"]
-    newair[,3] <- as.numeric(as.character(air$data_valuemessage))[air$pollutant=="Nitric Oxide (NO)"]
-    newair[,4] <- as.numeric(as.character(air$data_valuemessage))[air$pollutant=="Nitrogen Dioxide (NO2)"]
-    newair[,5] <- as.numeric(as.character(air$data_valuemessage))[air$pollutant=="Ozone (O3)"]
+    newair[,1] <- air[air$pollutant=="Elemental Carbon (EC)",]$data_valuemessage
+    newair[,2] <- air$data_valuemessage[air$pollutant=="Fine Particulate Matter (PM2.5)"]
+    newair[,3] <- air$data_valuemessage[air$pollutant=="Nitric Oxide (NO)"]
+    newair[,4] <- air$data_valuemessage[air$pollutant=="Nitrogen Dioxide (NO2)"]
+    newair[,5] <- air$data_valuemessage[air$pollutant=="Ozone (O3)"]
     colnames(newair) <- levels(as.factor(air$pollutant))
-    rownames(newair) <- air$geo_entity_name[1:48]
+    rownames(newair) <- air[air$pollutant=="Ozone (O3)",]$geo_entity_name
     
     ## get citibike stations data
     bikeStations <- inputData$bike
@@ -136,15 +137,38 @@ shinyServer(
       
     })
     
-    ## render air quality heatmap -  CHANGE
-    output$mapAirPlot <- renderLeaflet({
-      
-      #airHeatmap( air, input$mapPollut )
-  
-      #gardenLeaflet( gardens, treeIcons )
+    ## render air quality heatmap 
+    output$mapAirPlot1 <-renderLeaflet(
+      {
+        
+        quan_map(air,"Fine Particulate Matter (PM2.5)",input=input$pollutant_level)
+      }
+    )
     
-    })
     
+    output$mapAirPlot2 <-renderLeaflet(
+      {
+        quan_map(air,"Nitrogen Dioxide (NO2)",input=input$pollutant_level)
+      }
+    )
+    
+    output$mapAirPlot3 <-renderLeaflet(
+      {
+        quan_map(air,"Elemental Carbon (EC)",input=input$pollutant_level)
+      }
+    )
+    
+    output$mapAirPlot4 <-renderLeaflet(
+      {
+        quan_map(air,"Nitric Oxide (NO)",input=input$pollutant_level)
+      }
+    )
+    
+    output$mapAirPlot5 <-renderLeaflet(
+      {
+        quan_map(air,"Ozone (O3)",input=input$pollutant_level)
+      }
+    )
     
     ################################################################
     ## Datasets

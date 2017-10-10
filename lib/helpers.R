@@ -18,7 +18,7 @@ readData <- function(){
     
   # return list with 3 datatables
   list( gardens = as.data.table( read.csv( "../data/NYC_Greenthumb_Community_Gardens.csv" ) ),
-        air     = as.data.table( read.csv( "../data/Air_Quality.csv" ) ),
+        air     = as.data.table( read.csv( "../data/Air_Quality_new.csv" ) ), #change name
         bike    = as.data.table( read.csv( "../data/citibikeStations-012017.csv") ) )
   
 }
@@ -116,4 +116,21 @@ radar<-function(data,neighborhood){
 }
 
 
+#########EDA--Map Plot to visualize quantile levels of each pollutant in each neighborhood:
 
+quan_map<-function(data,type,input){
+   air1 <- data[data$pollutant==type,]
+   air1$level <- 1+rank(air1$data_valuemessage,ties.method="random")%/%(length(air1$data_valuemessage)/4)
+   air1$color <- c()
+   for(i in 1:length(air1$level)){
+      air1$color[i] <- ifelse(air1$level[i]==1,"green",ifelse(air1$level[i]==2,"yellow",ifelse(air1$level[i]==3,"orange","red")))
+   } 
+   pol <- air1[air1$level %in% as.numeric(input),]
+   leaflet() %>% # popup
+   addTiles() %>%
+   setView(-73.96, 40.75, zoom = 11) %>%
+    # add som markers:
+   addCircleMarkers(pol$lon,pol$lat, radius = 5, 
+                     color = pol$color, fillOpacity = 1, stroke = FALSE) 
+
+}
