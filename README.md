@@ -22,7 +22,10 @@ Term: Fall 2017
 	+ Air pollutants are more present in dense urban areas, and if New York City is anything, it's a dense urban area. This is why we've made this tool for you. We want to help you live a life in New York City and enjoy the benefits of an urban life while avoiding the problems associated with breathing bad air.
 	+ We believe that living green is important, and we want to empower you live green. Enjoy our tool by clicking on this [link]() and use it to learn how to live an environmentally friendly life. 	
 
-+ **Data source**: The air quality dataset can be found at [data.gov](https://data.ny.gov/); the NYC Greenthumb Communicty Gardens can be found at [data.ny.gov](https://data.ny.gov/); the Citi Bike dataset can be found at [citibikenyc.com](https://www.citibikenyc.com/system-data)
++ **Data source**: 
+	+ The air quality dataset can be found at [data.gov](https://data.ny.gov/)
+	+ The NYC Greenthumb Communicty Gardens can be found at [data.ny.gov](https://data.ny.gov/)
+	+ The Citi Bike dataset can be found at [citibikenyc.com](https://www.citibikenyc.com/system-data)
 + **Contribution statement**: ([default](doc/a_note_on_contributions.md)) All team members contributed equally in all stages of this project. All team members approve our work presented in this GitHub repository including this contributions statement. 
 
 Following [suggestions](http://nicercode.github.io/blog/2013-04-05-projects/) by [RICH FITZJOHN](http://nicercode.github.io/about/#Team) (@richfitz). This folder is orgarnized as follows.
