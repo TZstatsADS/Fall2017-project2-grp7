@@ -27,7 +27,7 @@ dashboardPage(
       ## Maps tab side
       ################################################################
       # create Maps Tab with subitems
-      menuItem("Map", tabName = "map",
+      menuItem("Maps", tabName = "map",
                
                menuItem('Air Quality',
                             tabName = 'tAirMap'),   
@@ -56,7 +56,7 @@ dashboardPage(
                            tabName = 'tAirData' ),
                menuSubItem('Community Gardens',
                            tabName = 'tGardenData' ),
-               menuSubItem('Citibike station',
+               menuSubItem('Citibike Stations',
                            tabName = 'tBikeData' )),
       
       
