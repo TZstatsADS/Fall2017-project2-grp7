@@ -118,19 +118,40 @@ radar<-function(data,neighborhood){
 
 #########EDA--Map Plot to visualize quantile levels of each pollutant in each neighborhood:
 
-quan_map<-function(data,type,input){
+quan_map<-function(data,type,choice){
+ # type="Nitrogen Dioxide (NO2)"
+ # data=air
    air1 <- data[data$pollutant==type,]
    air1$level <- 1+rank(air1$data_valuemessage,ties.method="random")%/%(length(air1$data_valuemessage)/4)
-   air1$color <- c()
+   air1$color <- rep(1,48)
    for(i in 1:length(air1$level)){
       air1$color[i] <- ifelse(air1$level[i]==1,"green",ifelse(air1$level[i]==2,"yellow",ifelse(air1$level[i]==3,"orange","red")))
    } 
-   pol <- air1[air1$level %in% as.numeric(input),]
-   leaflet() %>% # popup
+   pol <- air1[air1$level %in% as.numeric(choice),]
+   p <- leaflet() %>% # popup
    addTiles() %>%
-   setView(-73.96, 40.75, zoom = 11) %>%
+   setView(-73.96, 40.75, zoom = 9) %>%
     # add som markers:
    addCircleMarkers(pol$lon,pol$lat, radius = 5, 
                      color = pol$color, fillOpacity = 1, stroke = FALSE) 
+   return(p)
 
+}
+
+
+quan_map0<-function(data,choice){
+   air0<-data[data$pollutant=="Ozone (O3)",]
+   air0$sum <- tapply(data$data_valuemessage,data$geo_entity_name,sum)
+   air0$level <- 1+rank( air0$sum ,ties.method="random")%/%(length(air0$sum)/4)
+   air0$color <- rep(1,48)
+   for(i in 1:length(air0$level)){
+        air0$color[i] <- ifelse(air0$level[i]==1,"green",ifelse(air0$level[i]==2,"yellow",ifelse(air0$level[i]==3,"orange","red")))
+   } 
+   pol <- air0[air0$level %in% as.numeric(choice),]
+   p <- leaflet() %>% # popup
+        addTiles() %>%
+        setView(-73.96, 40.75, zoom = 9) %>%
+  # add som markers:
+        addCircleMarkers(pol$lon,pol$lat, radius = 5, 
+                    color = pol$color, fillOpacity = 1, stroke = FALSE) 
 }
