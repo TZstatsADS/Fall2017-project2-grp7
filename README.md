@@ -26,7 +26,12 @@ Term: Fall 2017
 	+ The air quality dataset can be found at [data.gov](https://data.ny.gov/)
 	+ The NYC Greenthumb Communicty Gardens can be found at [data.ny.gov](https://data.ny.gov/)
 	+ The Citi Bike dataset can be found at [citibikenyc.com](https://www.citibikenyc.com/system-data)
-+ **Contribution statement**: ([default](doc/a_note_on_contributions.md)) All team members contributed equally in all stages of this project. All team members approve our work presented in this GitHub repository including this contributions statement. 
++ **Contribution statement**: ([default](doc/a_note_on_contributions.md)) All team members are actively involved in all stages of this project. All team members approve our work presented in this GitHub repository including this contributions statement.
+	+ Cavalheiro De Paoli Lyrio, Joaquim: create the structure of shiny app, create maps for gardens and citibike stations, lead the discussion, find the datasets; 
+	+ Gao, Xin: complement the shiny structure, contribute the quantile maps and radar plot for air quality;
+	+ Guo, Xinyao: complement the shiny structure, contribute the statistical analysis for air quality, find the datasets;
+	+ Ni, Jiayu: complement the shiny structure, contribute the statistical analysis for citibike stations,
+	+ Thompson, Wyatt: complement the shiny structure, contribute the introduction and all text parts, find the datasets, lead the discussion. 
 
 Following [suggestions](http://nicercode.github.io/blog/2013-04-05-projects/) by [RICH FITZJOHN](http://nicercode.github.io/about/#Team) (@richfitz). This folder is orgarnized as follows.
 
