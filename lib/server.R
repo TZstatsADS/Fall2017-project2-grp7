@@ -89,14 +89,6 @@ shinyServer(
       
     })
     
-    output$uiEda3 <- renderUI({
-      
-      selectInput( 'eda3BikeNeighborhood', 'Choose Neighborhood', 
-                   choices = c("ALL", unique(air$geo_entity_name)), selected = "Manhattan")
-      
-    })
-    
-    
 
     ################################################################
     ## Exploratory Data Analysis Plot
@@ -120,6 +112,16 @@ shinyServer(
 
     })
     
+    output$tableBikestations <- renderDataTable(
+      distance(data = bikeStations ,loc = geocodeAdddress(input$eda3BikeNeighborhood), km = input$dis)
+      )
+    
+    
+    output$analysis <- renderText({
+      
+      pollutantText( input$eda1Pollut )
+      
+    })
     
     ################################################################
     ## Maps
@@ -150,35 +152,46 @@ shinyServer(
     })
     
     ## render air quality heatmap 
+    output$mapAirPlot0 <-renderLeaflet(
+      { 
+        
+        quan_map0(air,choice=input$pollutant_level0)
+        
+        
+      }
+    )
+    
+    
     output$mapAirPlot1 <-renderLeaflet(
       {
         
-        quan_map(air,"Fine Particulate Matter (PM2.5)",input=input$pollutant_level)
+        quan_map(air,"Fine Particulate Matter (PM2.5)",choice=input$pollutant_level1)
       }
     )
     
     
     output$mapAirPlot2 <-renderLeaflet(
       {
-        quan_map(air,"Nitrogen Dioxide (NO2)",input=input$pollutant_level)
+        quan_map(air,"Nitrogen Dioxide (NO2)",choice=input$pollutant_level2)
+       
       }
     )
     
     output$mapAirPlot3 <-renderLeaflet(
       {
-        quan_map(air,"Elemental Carbon (EC)",input=input$pollutant_level)
+        quan_map(air,"Elemental Carbon (EC)",choice=input$pollutant_level3)
       }
     )
     
     output$mapAirPlot4 <-renderLeaflet(
       {
-        quan_map(air,"Nitric Oxide (NO)",input=input$pollutant_level)
+        quan_map(air,"Nitric Oxide (NO)",choice=input$pollutant_level4)
       }
     )
     
     output$mapAirPlot5 <-renderLeaflet(
       {
-        quan_map(air,"Ozone (O3)",input=input$pollutant_level)
+        quan_map(air,"Ozone (O3)",choice=input$pollutant_level5)
       }
     )
     
@@ -194,12 +207,6 @@ shinyServer(
     
     ## render bike station datatable
     output$tableBike <- renderDataTable( bikeStations )
-    
-    
-    ## render bike stations analysis table
-    
-    output$tableBikestations <- renderDataTable(distance(data = bikeStations ,loc = geocodeAdddress(input$eda3BikeNeighborhood), km = input$dis))
-    
     
   }
   

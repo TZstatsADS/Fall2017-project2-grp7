@@ -3,10 +3,6 @@
 ##
 ## histogram as example
 ##
-
-library('RJSONIO')
-library('geosphere')
-library('purrr')
 exampleHist <- function( n ){
   
   set.seed(123)
@@ -21,9 +17,13 @@ exampleHist <- function( n ){
 readData <- function(){
     
   # return list with 3 datatables
-  list( gardens = read.csv( "../data/NYC_Greenthumb_Community_Gardens.csv" ) ,
-        air     = read.csv( "../data/Air_Quality_new.csv" ) , #change name
-        bike    = read.csv( "../data/citibikeStations-012017.csv")  )
+  # list( gardens = as.data.table( read.csv( "../data/NYC_Greenthumb_Community_Gardens.csv" ) ),
+  #       air     = as.data.table( read.csv( "../data/Air_Quality_new.csv" ) ), #change name
+  #       bike    = as.data.table( read.csv( "../data/citibikeStations-012017.csv") ) )
+  
+  list( gardens = as.data.table( read.csv( "../data/NYC_Greenthumb_Community_Gardens.csv" ) ),
+        air     = as.data.table( read.csv( "../data/Air_Quality_new.csv" ) ), #change name
+        bike    =  read.csv( "../data/citibikeStations-012017.csv")  )
   
 }
 
@@ -122,23 +122,103 @@ radar<-function(data,neighborhood){
 
 #########EDA--Map Plot to visualize quantile levels of each pollutant in each neighborhood:
 
-quan_map<-function(data,type,input){
+quan_map<-function(data,type,choice){
+ # type="Nitrogen Dioxide (NO2)"
+ # data=air
    air1 <- data[data$pollutant==type,]
    air1$level <- 1+rank(air1$data_valuemessage,ties.method="random")%/%(length(air1$data_valuemessage)/4)
-   air1$color <- c()
+   air1$color <- rep(1,48)
    for(i in 1:length(air1$level)){
       air1$color[i] <- ifelse(air1$level[i]==1,"green",ifelse(air1$level[i]==2,"yellow",ifelse(air1$level[i]==3,"orange","red")))
    } 
-   pol <- air1[air1$level %in% as.numeric(input),]
-   leaflet() %>% # popup
+   pol <- air1[air1$level %in% as.numeric(choice),]
+   p <- leaflet() %>% # popup
    addTiles() %>%
-   setView(-73.96, 40.75, zoom = 11) %>%
+   setView(-73.96, 40.75, zoom = 9) %>%
     # add som markers:
-   addCircleMarkers(pol$lon,pol$lat, radius = 5, 
+   addCircleMarkers(pol$lon,pol$lat, radius = 8, 
                      color = pol$color, fillOpacity = 1, stroke = FALSE) 
+   return(p)
 
 }
 
+
+quan_map0<-function(data,choice){
+   air0<-data[data$pollutant=="Ozone (O3)",]
+   air0$sum <- tapply(data$data_valuemessage,data$geo_entity_name,sum)
+   air0$level <- 1+rank( air0$sum ,ties.method="random")%/%(length(air0$sum)/4)
+   air0$color <- rep(1,48)
+   for(i in 1:length(air0$level)){
+        air0$color[i] <- ifelse(air0$level[i]==1,"green",ifelse(air0$level[i]==2,"yellow",ifelse(air0$level[i]==3,"orange","red")))
+   } 
+   pol <- air0[air0$level %in% as.numeric(choice),]
+   p <- leaflet() %>% # popup
+        addTiles() %>%
+        setView(-73.96, 40.75, zoom = 9) %>%
+  # add som markers:
+        addCircleMarkers(pol$lon,pol$lat, radius = 8, 
+                    color = pol$color, fillOpacity = 1, stroke = FALSE) 
+}
+
+##
+
+pollutantText <- function( pollutant ){
+  
+  if( pollutant == "Nitrogen Dioxide (NO2)" ){
+    "Nitrogen Dioxide is an immediately dangerous pollutant. The EPA 
+    has tied chronic exposure to nitrogen dioxide as causing lung irritation and eye irritation.
+    Often, exposure to nitrogen dioxide from an indoor source, like a stove, is enough to send people 
+    to the emergency room!"
+    
+  }
+  
+  else if( pollutant == "Ozone (O3)"){
+    
+    "Ozone in the Earth`s stratosphere absorbs radiation from the sun, and keeps the heat from 
+    reaching our lower atmosphere. But ozone at low altitudes acts as a greenhouse gas, working to 
+    raise global temperature by absorbing heat in the lower atmosphere."
+    
+  } 
+  
+  else if( pollutant =="Nitric Oxide (NO)"){
+    " Nitric oxide reacts with oxygen to contribute to the depletion of the ozone layer, 
+      exacerbating the effects caused by the increase in greenhouse gasses. Nitric oxide reacts with
+      the oxygen in the atmosphere to create nitric dioxide, stripping away oxygen from the atmosphere. "
+    
+  }
+  else if( pollutant == "Elemental Carbon (EC)"){
+    "The simple elemental carbon, as well as carbon monoxide 
+    and carbon Dioxide are greenhouse gasses. They are created from the
+    combustion of both fossil fuels and biofuels, and the growing 
+    presence of carbon and carbon compounds spell disaster for our environment 
+    and those who live in it. The most direct effect of these pollutants
+    comes in the changing of the weather. The carbon absorbs extra heat in the
+    atmosphere and alters weather patterns. So why do we care about some warmer weather?
+    Well, for one, areas that previously were farmable become too hot to farm. And furthermore,
+    the increase in temperature leads to more wildfires, storms, and droughts, radically changing the
+    lives of populations affected. For example, in the California Central Valley region, rising temperatures
+    have dramatically affected the yield of tomato crops, wheat, rice, maize, and sunflowers. "
+  }
+  
+  else if (pollutant == "Fine Particulate Matter (PM2.5)"){
+    "Fine particulate matter is composed of tiny aerosol particles that are 2.5 micrometers 
+    or smaller in size. The particulates typically are created by power plants, factories, and in part
+    from automobiles. This pollutant, rather than indirectly causing weather changes, poses an immediate 
+     problem for human health. The EPA has linked exposure to FPM with increased chance for asthma, heart 
+     attack, and difficulty breathing. Not to mention that this pollutant is responsible for the haze you 
+    can see over the city on certain mornings. "
+      
+  }
+  else{
+    ""
+  }
+  
+}
+  
+
+#####
+#####
+#####
 
 #define a function to transform address to longtitude and latitude
 geocodeAdddress <- function(address) {
@@ -173,6 +253,7 @@ earth.dist <- function (long1, lat1, long2, lat2)
   return(d)
 }
 
+
 #define function to select data frame within ? kilometers of the location
 distance <- function(data,loc,km){
   within_km=function(line_data,loc,km){
@@ -205,6 +286,3 @@ distance <- function(data,loc,km){
   data_sel=data_sel[order(data_sel$dis),]
   return(data_sel)
 }
-
-
-
