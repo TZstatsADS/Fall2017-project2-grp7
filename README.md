@@ -30,7 +30,7 @@ Term: Fall 2017
 	+ Cavalheiro De Paoli Lyrio, Joaquim: create the structure of shiny app, create maps for gardens and citibike stations, lead the discussion, find the datasets; 
 	+ Gao, Xin: complement the shiny structure, contribute the quantile maps and radar plot for air quality;
 	+ Guo, Xinyao: complement the shiny structure, contribute the statistical analysis for air quality, find the datasets;
-	+ Ni, Jiayu: complement the shiny structure, contribute the statistical analysis for citibike stations,
+	+ Ni, Jiayu: complement the shiny structure, contribute the statistical analysis for citibike stations;
 	+ Thompson, Wyatt: complement the shiny structure, contribute the introduction and all text parts, find the datasets, lead the discussion. 
 
 Following [suggestions](http://nicercode.github.io/blog/2013-04-05-projects/) by [RICH FITZJOHN](http://nicercode.github.io/about/#Team) (@richfitz). This folder is orgarnized as follows.
