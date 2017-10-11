@@ -14,6 +14,8 @@ Term: Fall 2017
 	+ Guo, Xinyao xg2257@columbia.edu
 	+ Ni, Jiayu jn2585@columbia.edu
 	+ Thompson, Wyatt wct2112@columbia.edu
++ Link to our app: https://wct2112.shinyapps.io/greenlivingnewyork/
+
 ![screenshot](doc/Screenshot-App.png)
 
 + **Project summary**: 
