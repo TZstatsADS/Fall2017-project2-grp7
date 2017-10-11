@@ -17,13 +17,13 @@ exampleHist <- function( n ){
 readData <- function(){
     
   # return list with 3 datatables
-  # list( gardens = as.data.table( read.csv( "../data/NYC_Greenthumb_Community_Gardens.csv" ) ),
-  #       air     = as.data.table( read.csv( "../data/Air_Quality_new.csv" ) ), #change name
-  #       bike    = as.data.table( read.csv( "../data/citibikeStations-012017.csv") ) )
+  # list( gardens = as.data.table( read.csv( "./data/NYC_Greenthumb_Community_Gardens.csv" ) ),
+  #       air     = as.data.table( read.csv( "./data/Air_Quality_new.csv" ) ), #change name
+  #       bike    = as.data.table( read.csv( "./data/citibikeStations-012017.csv") ) )
   
-  list( gardens = as.data.table( read.csv( "../data/NYC_Greenthumb_Community_Gardens.csv" ) ),
-        air     = as.data.table( read.csv( "../data/Air_Quality_new.csv" ) ), #change name
-        bike    =  read.csv( "../data/citibikeStations-012017.csv")  )
+  list( gardens = as.data.table( read.csv( "data/NYC_Greenthumb_Community_Gardens.csv" ) ),
+        air     = as.data.table( read.csv( "data/Air_Quality_new.csv" ) ), #change name
+        bike    =  read.csv( "data/citibikeStations-012017.csv")  )
   
 }
 

@@ -1,0 +1,12 @@
+name: greenlivingnewyork
+title: GreenLivingNewYork
+username:
+account: wct2112
+server: shinyapps.io
+hostUrl: https://api.shinyapps.io/v1
+appId: 224212
+bundleId: 1022035
+url: https://wct2112.shinyapps.io/greenlivingnewyork/
+when: 1507751147.11695
+asMultiple: FALSE
+asStatic: FALSE
