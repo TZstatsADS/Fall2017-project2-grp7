@@ -14,7 +14,7 @@ Term: Fall 2017
 	+ Guo, Xinyao xg2257@columbia.edu
 	+ Ni, Jiayu jn2585@columbia.edu
 	+ Thompson, Wyatt wct2112@columbia.edu
-![screenshot](doc/screenshot2.png)
+![screenshot](doc/Screenshot-App.png)
 
 + **Project summary**: 
 	+ Do you want to explore the distribution of air pollution in NYC, find a place to live or a garden to hang out with cleaner air? 
