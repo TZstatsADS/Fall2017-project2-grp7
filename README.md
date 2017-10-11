@@ -20,7 +20,7 @@ Term: Fall 2017
 	+ Do you want to explore the distribution of air pollution in NYC, find a place to live or a garden to hang out with cleaner air? 
 	+ Do you want to fight the problem of air pollution by avoiding the harmful fossil-fuel combustion of motor vehicles? 
 	+ Air pollutants are more present in dense urban areas, and if New York City is anything, it's a dense urban area. This is why we've made this tool for you. We want to help you live a life in New York City and enjoy the benefits of an urban life while avoiding the problems associated with breathing bad air.
-	+ We believe that living green is important, and we want to empower you live green. Enjoy our tool by clicking on this [link]() and use it to learn how to live an environmentally friendly life. 	
+	+ We believe that living green is important, and we want to empower you live green. Enjoy our tool by clicking on this [link](https://wct2112.shinyapps.io/greenlivingnewyork/) and use it to learn how to live an environmentally friendly life. 	
 
 + **Data source**: 
 	+ The air quality dataset can be found at [data.gov](https://data.ny.gov/)
