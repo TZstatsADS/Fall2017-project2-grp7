@@ -30,10 +30,10 @@ Term: Fall 2017
 	+ The Citi Bike dataset can be found at [citibikenyc.com](https://www.citibikenyc.com/system-data)
 + **Contribution statement**: ([default](doc/a_note_on_contributions.md)) All team members are actively involved in all stages of this project. All team members approve our work presented in this GitHub repository including this contributions statement.
 	+ Cavalheiro De Paoli Lyrio, Joaquim: create the structure of shiny app, create maps for gardens and citibike stations, lead the discussion, find the datasets; 
-	+ Gao, Xin: complete the shiny structure, contribute to the quantile maps and radar plots for air quality;
+	+ Gao, Xin: complete the shiny structure, contribute to the 6 quantile maps for air quality, contribute to radar plots for each neighbourhood's air quality;
 	+ Guo, Xinyao: complete the shiny structure, contribute to the statistical analysis for air quality, explore on creating heatmap, find the datasets;
 	+ Ni, Jiayu: complete the shiny structure, contribute the statistical analysis for citibike stations;
-	+ Thompson, Wyatt: complement the shiny structure, contribute the introduction and all text parts, explore on creating heatmap, find the datasets, lead the discussion. 
+	+ Thompson, Wyatt: complement the shiny structure, contribute the introduction and all text parts, explore on creating heatmap, find the datasets. 
 
 Following [suggestions](http://nicercode.github.io/blog/2013-04-05-projects/) by [RICH FITZJOHN](http://nicercode.github.io/about/#Team) (@richfitz). This folder is orgarnized as follows.
 
